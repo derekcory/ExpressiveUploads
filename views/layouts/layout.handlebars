@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="/css/bootstrap.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+if (annyang) {
+  // Let's define our first command. First the text we expect, and then the function it should call
+  var commands = {
+    'Login': function() {
+      document.getElementById('username').value = "derek";
+      document.getElementById('password').value = "wasd";
+      document.getElementById('loginform').submit();
+    },
+
+    'Log out': function() {
+        window.location.replace("/users/logout");
+    },
+
+    'Register': function(){
+        window.location.replace("/users/register");
+    },
+
+    'Dashboard': function(){
+        window.location.replace("/");
+    },
+
+    'Upload *fname': function(fname){
+        fname = fname.toLowerCase();
+        fname = fname.replace(/ +/g, "");
+        file = "/Users/Derek/Desktop/" + fname;
+        alert(file);
+        document.getElementById("fileUploadName").value = file;
+        document.getElementById("fileUploadForm").submit();
+    }
+  };
+
+  // Add our commands to annyang
+  annyang.addCommands(commands);
+
+  // Start listening. You can call this here, or attach this call to an event, button, etc.
+  annyang.start();
+}
+</script>
+</head>
+<body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            {{#if user}}
+            <li role="presentation"><a href="/">Dashboard</a></li>
+            <li role="presentation"><a href="/users/logout">Logout</a></li>
+            {{else}}
+                <li role="presentation"><a href="/users/login">Login</a></li>
+                <li role="presentation"><a href="/users/register">Register</a></li>
+            {{/if}}
+          </ul>
+        </nav>
+        <h3 class="text-muted">Capstone</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+        	{{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-danger">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
+          {{{body}}}
+        </div>
+        {{#if user}}
+        <div class="col-md-6 m-auto">
+          File Location: <form action="/upload" name="fileUploadForm" id="fileUploadForm" method="POST"
+          enctype="multipart/form-data">
+          <div class="custom-file mb-3">
+            <input type="file" id="file" name="file" class="custom-file-input">
+            <label for="file" class="custom-file-label">Choose File</label>
+            <input type="submit" id="submitFile" name="submitFile" class="btn btn-primary btn-block" value="Submit">
+          </div>             
+          </form>
+        </div>
+        {{/if}}
+      </div>
+      <footer class="footer">
+        <p>&copy; Capstone</p>
+      </footer>
+    </div> <!-- /container -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

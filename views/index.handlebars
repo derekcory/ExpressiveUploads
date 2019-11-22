@@ -1,0 +1,40 @@
+<h2 class="page-header" style="text-transform: capitalize;">Welcome, {{user.name}}</h2>
+<p>Here are all of your files:</p>
+<p>
+<!-- Commented out to try and display file names instead of users list
+{{#each userInfo}}
+<ul>
+	<li>Name: {{this.name}}</li>
+	<li>Username: {{this.username}}</li>
+	<li>Email: {{this.email}}</li>
+</ul>
+{{/each}}
+-->
+<div style="height:400px;overflow:auto;">
+{{#each files}}
+<div class="card card-body mb-3">
+Hex File Name: {{this.filename}} </br>
+Content Type: {{this.contentType}} </br>
+{{#each metadata}}
+	{{#if originalname}}
+		Original File Name: {{originalname}}
+	{{/if}}
+{{/each}}
+<table style="width:20%">
+<tr>
+	<td>
+		<form action="/files/{{this._id}}" method="GET">
+			<button><img src="/images/download.png" alt="download"></button>
+		</form>
+	</td>
+	<td>
+		<form action="/files/{{this._id}}?_method=DELETE" method="POST">
+			<button><img src="/images/delete.png" alt="delete"></button>
+		</form>
+	<td>
+</tr>
+</table>
+</div>
+{{/each}}
+</div><!-- End of style div -->
+</p>
